@@ -38,17 +38,21 @@ public class StaticCallBenchmark {
     }
 
     @Benchmark
-    public String directCall() throws Throwable {
+    public Object directCall() throws Throwable {
         return staticMethod();
     }
 
+    /**
+     * The bytecode for this method always contains "iconst_0; anewarray",
+     * which is due to the varargs list in Method.invoke(obj, args...).
+     */
     @Benchmark
-    public String reflectCall() throws Throwable {
-        return (String) method.invoke(null);
+    public Object reflectCall() throws Throwable {
+        return method.invoke(null);
     }
 
     @Benchmark
-    public String invokeCall() throws Throwable {
+    public Object invokeCall() throws Throwable {
         return (String) handle.invoke();
     }
 }
