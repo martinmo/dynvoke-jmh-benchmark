@@ -1,6 +1,7 @@
 package de.tu_dresden.indybench;
 
 import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.CompilerControl;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.State;
 
@@ -27,6 +28,7 @@ public class StaticCallBenchmark {
     }
 
     // The method to be called
+    @CompilerControl(CompilerControl.Mode.DONT_INLINE)
     public static String staticMethod() {
         return "staticMethod";
     }
