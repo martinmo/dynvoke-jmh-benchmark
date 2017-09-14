@@ -1,4 +1,4 @@
-package de.tu_dresden.indybench;
+package de.tu_dresden.indybench.invoke;
 
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.CompilerControl;
@@ -12,14 +12,14 @@ import java.lang.reflect.Method;
 import static java.lang.invoke.MethodType.methodType;
 
 @State(Scope.Benchmark)
-public class StaticCallBenchmark {
+public class StaticInvokeBenchmark {
     private static final MethodHandles.Lookup LOOKUP = MethodHandles.publicLookup();
 
     private final Method method;
     private final MethodHandle handle;
     private final MethodHandle unreflectHandle;
 
-    public StaticCallBenchmark() {
+    public StaticInvokeBenchmark() {
         try {
             method = getClass().getMethod("staticMethod");
             handle = LOOKUP.findStatic(getClass(), "staticMethod", methodType(String.class));
