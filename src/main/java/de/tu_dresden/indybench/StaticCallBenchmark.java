@@ -17,11 +17,13 @@ public class StaticCallBenchmark {
 
     private final Method method;
     private final MethodHandle handle;
+    private final MethodHandle unreflectHandle;
 
     public StaticCallBenchmark() {
         try {
             method = getClass().getMethod("staticMethod");
             handle = LOOKUP.findStatic(getClass(), "staticMethod", methodType(String.class));
+            unreflectHandle = LOOKUP.unreflect(method);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -54,5 +56,10 @@ public class StaticCallBenchmark {
     @Benchmark
     public Object invokeCall() throws Throwable {
         return (String) handle.invoke();
+    }
+
+    @Benchmark
+    public Object unreflectInvokeCall() throws Throwable {
+        return (String) unreflectHandle.invoke();
     }
 }
