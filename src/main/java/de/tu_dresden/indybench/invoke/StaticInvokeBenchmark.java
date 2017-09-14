@@ -1,7 +1,7 @@
 package de.tu_dresden.indybench.invoke;
 
+import de.tu_dresden.indybench.Methods;
 import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.CompilerControl;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.State;
 
@@ -21,18 +21,12 @@ public class StaticInvokeBenchmark {
 
     public StaticInvokeBenchmark() {
         try {
-            method = getClass().getMethod("staticMethod");
-            handle = LOOKUP.findStatic(getClass(), "staticMethod", methodType(String.class));
+            method = Methods.class.getMethod("staticMethod");
+            handle = LOOKUP.findStatic(Methods.class, "staticMethod", methodType(String.class));
             unreflectHandle = LOOKUP.unreflect(method);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    // The method to be called
-    @CompilerControl(CompilerControl.Mode.DONT_INLINE)
-    public static String staticMethod() {
-        return "staticMethod";
     }
 
     @Benchmark
@@ -41,7 +35,7 @@ public class StaticInvokeBenchmark {
 
     @Benchmark
     public Object directCall() throws Throwable {
-        return staticMethod();
+        return Methods.staticMethod();
     }
 
     /**
