@@ -12,4 +12,14 @@ public class MethodImpl {
     public static String staticMethod() {
         return "staticMethod";
     }
+
+    @CompilerControl(CompilerControl.Mode.DONT_INLINE)
+    public Object virtualMethodNoInline() {
+        return this;
+    }
+
+    @CompilerControl(CompilerControl.Mode.INLINE)
+    public Object virtualMethod() {
+        return this;
+    }
 }
