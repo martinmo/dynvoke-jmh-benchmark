@@ -17,7 +17,7 @@ All benchmarks use the [Java Microbenchmarking Harness][jmh].
 
 ## Run
 
-    ./run_benchmarks.sh
+    ./run_benchmarks.sh ...
 
 or
 
