@@ -30,6 +30,11 @@ public class MethodLookup {
     }
 
     @Benchmark
+    public Object lookup_unreflect_Class_getMethod() throws Throwable {
+        return lookup.unreflect(clazz.getMethod(methodName));
+    }
+
+    @Benchmark
     public Object lookup_findVirtual() throws Throwable {
         return lookup.findVirtual(clazz, methodName, TYPE);
     }
