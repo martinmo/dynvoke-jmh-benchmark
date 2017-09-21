@@ -4,9 +4,4 @@ public class Child extends Parent {
     public String childOnly() {
         return "Child";
     }
-
-    @Override
-    public String overridden() {
-        return "Child";
-    }
 }

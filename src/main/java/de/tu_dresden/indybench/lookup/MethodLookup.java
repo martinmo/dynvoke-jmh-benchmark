@@ -21,7 +21,7 @@ public class MethodLookup {
     private MethodHandles.Lookup publicLookup = MethodHandles.publicLookup();
     private Class<?> clazz = Child.class;
 
-    @Param({"overridden", "parentOnly", "childOnly"})
+    @Param({"parentOnly", "childOnly"})
     private String methodName;
 
     @Benchmark
