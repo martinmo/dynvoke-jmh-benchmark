@@ -19,6 +19,10 @@ Other sources of inspiration include:
 * https://github.com/golo-lang/golo-jmh-benchmarks
 * https://github.com/shipilev/article-method-dispatch
 
+## Results
+
+See the [results of benchmark runs on my machine](results.md).
+
 ## Build
 
     mvn clean package

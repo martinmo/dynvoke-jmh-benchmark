@@ -5,6 +5,32 @@
 * All described benchmarks are highly synthetic and only touch a small subset of what could have been measured.
 * Results may vary depending on the runtime environment (hardware, operating system and software, JDK version, etc).
 
+### Caveats
+
+Each benchmark has a warmup phase, providing the JVM optimization opportunities which may be unrealistic in real
+world scenarios. In practice, some methods are just called a few times or even only once. Depending on the JVM options
+(see `-Xcomp` and `-XX:CompileTreshold`), method compilation to native code only happens after a certain threshold
+(e.g., 10000 invocations). Additionally, call sites must be linked on their first invocation. This first time
+invocation can especially be costly for `invokedynamic` call sites, because linking happens in a bootstrap method
+provided by the programmer.
+
+To see these effects in action, run `./run_warmup_singleshot.sh`, which typically prints lines like these:
+
+    # Run progress: 0,00% complete, ETA 00:00:00
+    # Fork: 1 of 1
+    # Warmup Iteration   1: 5067,868 us/op
+    # Warmup Iteration   2: 132,388 us/op
+    # Warmup Iteration   3: 80,232 us/op
+    # Warmup Iteration   4: 78,538 us/op
+    # Warmup Iteration   5: 74,499 us/op
+    # Warmup Iteration   6: 73,966 us/op
+    # Warmup Iteration   7: 77,861 us/op
+    # Warmup Iteration   8: 76,433 us/op
+    # Warmup Iteration   9: 72,412 us/op
+    # Warmup Iteration  10: 78,548 us/op
+
+
+TL;DR: don't forget to take initialization costs into account.
 
 ### Setup
 
@@ -71,3 +97,11 @@ Observations:
 Observations:
 
 * The `fib()` version using `invokedynamic` is 24% slower than the `invokestatic` version.
+
+
+### Interpretation
+
+
+
+The good performance of the reflective lookup API in comparison to the new `java.lang.invoke` comes a bit unexpected,
+but obviously this API has been optimized over the years. One caveat is that all measurements
