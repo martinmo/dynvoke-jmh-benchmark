@@ -9,6 +9,15 @@ import java.util.concurrent.TimeUnit;
 
 import static java.lang.invoke.MethodType.methodType;
 
+/**
+ * Invoke instructions benchmark using a recursive Fibonacci function.
+ *
+ * Recursive fibonacci calls itself twice and does relatively cheap computations
+ * otherwise, so it should be a good way to compare invokedynamic and invokestatic.
+ *
+ * Both versions are written using Jitescript, so we can make sure they are identical
+ * otherwise.
+ */
 @State(Scope.Thread)
 @Warmup(iterations = 20, time = 1)
 @Measurement(iterations = 10, time = 1)

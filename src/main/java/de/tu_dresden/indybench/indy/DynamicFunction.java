@@ -10,7 +10,9 @@ import java.lang.invoke.MethodType;
 
 import static me.qmx.jitescript.util.CodegenUtils.c;
 
-
+/**
+ * Overengineered dynamic function generator to make the benchmark code look pretty.
+ */
 public class DynamicFunction {
     private static final MethodHandles.Lookup LOOKUP = MethodHandles.lookup();
 
