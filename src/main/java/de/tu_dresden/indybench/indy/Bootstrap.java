@@ -15,8 +15,8 @@ public class Bootstrap {
     public static final String BOOTSTRAP_PATH = p(Bootstrap.class);
     public static final String BOOTSTRAP_SIG = sig(CallSite.class, Lookup.class, String.class, MethodType.class);
 
-    public static CallSite staticMethod(Lookup lookup, String name, MethodType type) throws Exception {
-        return new ConstantCallSite(lookup.findStatic(SimpleThroughput.class, name, type));
+    public static CallSite fib(Lookup lookup, String name, MethodType type) throws Exception {
+        return new ConstantCallSite(lookup.findStatic(lookup.lookupClass(), name, type));
     }
 
     public static Handle bootstrapHandle(String name) {
