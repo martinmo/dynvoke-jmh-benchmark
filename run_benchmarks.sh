@@ -1,2 +1,2 @@
 #!/bin/sh
-exec java -jar target/benchmarks.jar $@
+exec java -jar target/benchmarks.jar -foe true "$@"
