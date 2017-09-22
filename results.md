@@ -44,7 +44,7 @@ Software:
 - JMH version: 1.19
 
 
-### Lookup APIs
+### Lookup APIs: MethodLookup
 
     Benchmark                                      (methodName)  Mode  Cnt  Score   Error  Units
     MethodLookup.Class_getMethod                     parentOnly  avgt   20  0,394 ± 0,005  us/op
@@ -77,7 +77,7 @@ Explanation, speculation and remarks:
 * Note that if a `SecurityManager` is active, `Class.getMethod()` performance will be affected negatively.
 
 
-### Invoke APIs
+### Invoke APIs: StaticMethod and VirtualMethod
 
     Benchmark                          (inline)  Mode  Cnt   Score   Error  Units
     StaticMethod.MethodHandle_invoke       true  avgt   20   7,716 ± 0,344  ns/op
@@ -97,7 +97,7 @@ Observations:
 * Virtual method invocation is generally slower than static method invocation.
 
 
-### Invoke instructions
+### Invoke instructions: RecursiveFibonacci
 
 JDK 1.8.0_144, VM 25.144-b01:
 
@@ -118,7 +118,7 @@ Observations:
 * JDK 9 VM: the `invokedynamic` variant is only 1% slower.
 
 
-### Invoke instructions warmup behavior
+### Invoke instructions: RecursiveFibonacci warmup behavior
 
 `RecursiveFibonacci.invokestatic`:
 
