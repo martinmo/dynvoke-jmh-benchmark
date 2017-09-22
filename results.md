@@ -108,7 +108,27 @@ Observations:
 * JDK 9 VM: the `invokedynamic` variant is only 1% slower.
 
 
-### Interpretation
+### Invoke instructions warmup behavior
 
-The good performance of the reflective lookup API in comparison to the new `java.lang.invoke` comes a bit unexpected,
-but obviously this API has been optimized over the years.
+`RecursiveFibonacci.invokestatic`:
+
+    # Warmup Iteration   1: 2125,666 us/op
+    # Warmup Iteration   2: 109,460 us/op
+    # Warmup Iteration   3: 62,530 us/op
+    # Warmup Iteration   4: 69,093 us/op
+    # Warmup Iteration   5: 66,939 us/op
+
+`RecursiveFibonacci.invokedynamic`:
+
+    # Warmup Iteration   1: 4393,227 us/op
+    # Warmup Iteration   2: 124,310 us/op
+    # Warmup Iteration   3: 74,280 us/op
+    # Warmup Iteration   4: 72,018 us/op
+    # Warmup Iteration   5: 76,052 us/op
+
+
+Observations:
+
+* Both variants get down to ~70 µs/call after the second `fib()` call.
+* The first "cold" call to the `invokedynamic` variant of `fib()` takes more than twice as long as
+  the `invokestatic` variant.
