@@ -40,7 +40,7 @@ Hardware:
 
 Software:
 - OS: Mac OS X 10.12.6 (Build 16G29)
-- VM version: JDK 1.8.0_144, VM 25.144-b01
+- VM version: JDK 1.8.0_144, VM 25.144-b01 (if not explicitely specified otherwise)
 - JMH version: 1.19
 
 
@@ -89,19 +89,26 @@ Observations:
 
 ### Invoke instructions
 
+JDK 1.8.0_144, VM 25.144-b01:
+
     Benchmark                         (n)  Mode  Cnt   Score   Error  Units
     RecursiveFibonacci.invokedynamic   20  avgt   20  52,400 ± 0,980  us/op
     RecursiveFibonacci.invokestatic    20  avgt   20  42,223 ± 1,175  us/op
 
+JDK 9, VM 9+181:
+
+    Benchmark                         (n)  Mode  Cnt   Score   Error  Units
+    RecursiveFibonacci.invokedynamic   20  avgt   20  42,021 ± 0,745  us/op
+    RecursiveFibonacci.invokestatic    20  avgt   20  41,547 ± 0,727  us/op
+
 
 Observations:
 
-* The `fib()` version using `invokedynamic` is 24% slower than the `invokestatic` version.
+* JDK 1.8 VM: the `fib()` variant using `invokedynamic` is 24% slower than the `invokestatic` variant.
+* JDK 9 VM: the `invokedynamic` variant is only 1% slower.
 
 
 ### Interpretation
 
-
-
 The good performance of the reflective lookup API in comparison to the new `java.lang.invoke` comes a bit unexpected,
-but obviously this API has been optimized over the years. One caveat is that all measurements
+but obviously this API has been optimized over the years.
