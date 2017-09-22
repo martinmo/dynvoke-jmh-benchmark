@@ -1,6 +1,6 @@
-# Invokedynamic Benchmarks
+# JVM dynamic invocation benchmark
 
-This is a work-in-progress set of benchmarks to compare the runtime overhead of
+This is a work-in-progress set of tests to compare the runtime overhead of
 different dynamic invocation and lookup primitives on the JVM, such as:
 
 * `Class.getMethod()`
