@@ -1,4 +1,4 @@
-package de.tu_dresden.indybench.invoke;
+package net.mmorgenstern.dynvoke_benchmark.invoke;
 
 import org.openjdk.jmh.annotations.CompilerControl;
 

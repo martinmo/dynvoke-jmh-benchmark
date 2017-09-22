@@ -1,4 +1,4 @@
-package de.tu_dresden.indybench.indy;
+package net.mmorgenstern.dynvoke_benchmark.indy;
 
 import org.objectweb.asm.Handle;
 import org.objectweb.asm.Opcodes;

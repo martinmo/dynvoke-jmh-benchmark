@@ -1,4 +1,4 @@
-package de.tu_dresden.indybench.lookup;
+package net.mmorgenstern.dynvoke_benchmark.lookup;
 
 import org.openjdk.jmh.annotations.*;
 

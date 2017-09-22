@@ -1,4 +1,4 @@
-package de.tu_dresden.indybench.indy;
+package net.mmorgenstern.dynvoke_benchmark.indy;
 
 import me.qmx.jitescript.CodeBlock;
 import me.qmx.jitescript.JDKVersion;
