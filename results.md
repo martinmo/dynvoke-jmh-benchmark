@@ -66,6 +66,16 @@ Observations:
   pure `Lookup.findVirtual()` call.
 * At least for the reflective API, it seems to matter how "far away" an inherited method was implemented.
 
+Explanation, speculation and remarks:
+
+* `Class.getMethod()` has been introduced in JDK 1.1 (Feb '97) and probably was subject to heavy optimizations
+  since then, whereas `java.lang.invoke` was introduced in JDK 1.7 (Jul '11).
+* Down the call hierarchy, both APIs call a native method to get data from the VM. `Class` caches these results
+  (see the source for `Class.privateGetDeclaredMethods()`), whereas `Lookup.findVirtual()` doesn't appear to
+  implement such a cache.
+* `Class.getMethod()` doesn't need to check whether the return type matches.
+* Note that if a `SecurityManager` is active, `Class.getMethod()` performance will be affected negatively.
+
 
 ### Invoke APIs
 
