@@ -56,6 +56,8 @@ Software:
     MethodLookup.publicLookup_findVirtual            parentOnly  avgt   20  2,123 ± 0,143  us/op
     MethodLookup.publicLookup_findVirtual             childOnly  avgt   20  2,168 ± 0,127  us/op
 
+**Update**: this benchmark has a design flaw because it always looks up the same method in the same class.
+If one of the APIs employ a cache, our measurements are wrong.
 
 Observations:
 
@@ -72,9 +74,23 @@ Explanation, speculation and remarks:
   since then, whereas `java.lang.invoke` was introduced in JDK 1.7 (Jul '11).
 * Down the call hierarchy, both APIs call a native method to get data from the VM. `Class` caches these results
   (see the source for `Class.privateGetDeclaredMethods()`), whereas `Lookup.findVirtual()` doesn't appear to
-  implement such a cache.
+  implement such a cache. If we set the internal and undocumented system property `sun.reflect.nocaches=true`,
+  the results will look like this ([this property was removed in JDK 9][JDK-8169880]):
+
+        Benchmark                                      (methodName)  Mode  Cnt  Score   Error  Units
+        MethodLookup.Class_getMethod                     parentOnly  avgt   20  4,264 ± 0,184  us/op
+        MethodLookup.Class_getMethod                      childOnly  avgt   20  2,335 ± 0,088  us/op
+        MethodLookup.lookup_findVirtual                  parentOnly  avgt   20  2,083 ± 0,162  us/op
+        MethodLookup.lookup_findVirtual                   childOnly  avgt   20  1,818 ± 0,152  us/op
+        MethodLookup.lookup_unreflect_Class_getMethod    parentOnly  avgt   20  5,810 ± 0,264  us/op
+        MethodLookup.lookup_unreflect_Class_getMethod     childOnly  avgt   20  3,308 ± 0,580  us/op
+        MethodLookup.publicLookup_findVirtual            parentOnly  avgt   20  2,652 ± 0,210  us/op
+        MethodLookup.publicLookup_findVirtual             childOnly  avgt   20  2,341 ± 0,137  us/op
+
 * `Class.getMethod()` doesn't need to check whether the return type matches.
 * Note that if a `SecurityManager` is active, `Class.getMethod()` performance will be affected negatively.
+
+[JDK-8169880]: https://bugs.openjdk.java.net/browse/JDK-8169880
 
 
 ### Invoke APIs: StaticMethod and VirtualMethod
