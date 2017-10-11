@@ -25,7 +25,7 @@ See the [results of benchmark runs on my machine](results.md).
 
 ## Build
 
-    mvn clean package
+    ./mvnw clean package
 
 ## Run
 
